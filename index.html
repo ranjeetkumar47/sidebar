@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="bg-gray-100 flex h-screen">
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-indigo-800 text-white w-64 p-4 space-y-4 transition-all duration-300 ease-in-out">
+      <button onclick="toggleSidebar()" class="text-gray-300 hover:text-white">
+        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+      </button>
+
+      <!-- Sidebar Menu -->
+      <ul id="menu" class="mt-4 space-y-3">
+        <li data-page="home" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
+          <i data-lucide="home" class="w-5 h-5"></i>
+          <span class="sidebar-text">Home</span>
+        </li>
+        <li data-page="leadership" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
+          <i data-lucide="users" class="w-5 h-5"></i>
+          <span class="sidebar-text">Our Leadership</span>
+        </li>
+        <li
+          data-page="organization-chart"
+          class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800"
+        >
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span class="sidebar-text">Organization Chart</span>
+        </li>
+        <li data-page="productivity" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
+          <i data-lucide="activity" class="w-5 h-5"></i>
+          <span class="sidebar-text">Productivity</span>
+        </li>
+        <li data-page="dashboard" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
+          <i data-lucide="bar-chart" class="w-5 h-5"></i>
+          <span class="sidebar-text">Dashboard</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content" class="flex-1 p-6">
+      <h1 class="text-2xl font-bold">Welcome!</h1>
+      <p class="text-gray-700 mt-2">This is your main content area.</p>
+    </div>
+
+    <script>
+      // Load Lucide icons
+      lucide.createIcons()
+
+      // Sidebar Toggle Function
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar')
+        const texts = document.querySelectorAll('.sidebar-text')
+        sidebar.classList.toggle('w-64')
+        sidebar.classList.toggle('w-20')
+        texts.forEach((text) => text.classList.toggle('hidden'))
+      }
+
+      // Page Content Mapping
+      const pageContent = {
+        home: "<h1 class='text-2xl font-bold'>Home</h1><p class='text-gray-700 mt-2'>Welcome to the homepage!</p>",
+        leadership: "<h1 class='text-2xl font-bold'>Our Leadership</h1><p class='text-gray-700 mt-2'>Meet our leadership team.</p>",
+        'organization-chart':
+          "<h1 class='text-2xl font-bold'>Organization Chart</h1><p class='text-gray-700 mt-2'>Here is our organization structure.</p>",
+        productivity: "<h1 class='text-2xl font-bold'>Productivity</h1><p class='text-gray-700 mt-2'>Track productivity insights.</p>",
+        dashboard: "<h1 class='text-2xl font-bold'>Dashboard</h1><p class='text-gray-700 mt-2'>View important metrics.</p>"
+      }
+
+      // Active State and Content Change
+      const menuItems = document.querySelectorAll('.menu-item')
+      const contentDiv = document.getElementById('content')
+
+      function setActivePage(page) {
+        localStorage.setItem('activePage', page)
+        menuItems.forEach((item) => {
+          if (item.getAttribute('data-page') === page) {
+            item.classList.add('bg-white', 'text-indigo-800')
+            item.classList.remove('hover:bg-white', 'hover:text-indigo-800')
+          } else {
+            item.classList.remove('bg-white', 'text-indigo-800')
+            item.classList.add('hover:bg-white', 'hover:text-indigo-800')
+          }
+        })
+        contentDiv.innerHTML = pageContent[page] || "<h1 class='text-2xl font-bold'>Page Not Found</h1>"
+      }
+
+      // Apply Active State from LocalStorage
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedPage = localStorage.getItem('activePage') || 'home'
+        setActivePage(savedPage)
+        menuItems.forEach((item) => {
+          item.addEventListener('click', () => {
+            const page = item.getAttribute('data-page')
+            setActivePage(page)
+          })
+        })
+      })
+    </script>
+  </body>
+</html>
