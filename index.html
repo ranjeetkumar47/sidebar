@@ -9,66 +9,25 @@
   </head>
   <body class="bg-gray-100 flex h-screen">
     <!-- Sidebar -->
-    <div id="sidebar" class="bg-indigo-800 text-white w-64 p-4 space-y-4 transition-all duration-300 ease-in-out">
-      <button onclick="toggleSidebar()" class="text-gray-300 hover:text-white">
+    <div id="sidebar" class="bg-indigo-800 text-white max-w-64 w-64 p-4 space-y-4 transition-all duration-300 ease-in-out overflow-hidden">
+      <button onclick="toggleSidebar()" class="text-gray-300 hover:text-white flex items-center">
         <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        <span class="ml-2 sidebar-text transition-opacity duration-300 opacity-100">Toggle</span>
       </button>
 
       <!-- Sidebar Menu -->
       <ul id="menu" class="mt-4 space-y-2">
-        <li data-page="home" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
+        <li data-page="home" class="menu-item flex items-center p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
           <i data-lucide="home" class="w-5 h-5"></i>
-          <span class="sidebar-text">Home</span>
+          <span class="sidebar-text ml-3 transition-opacity duration-300 opacity-100">Home</span>
         </li>
-        <li data-page="leadership" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
-          <i data-lucide="users" class="w-5 h-5"></i>
-          <span class="sidebar-text">Our Leadership</span>
-        </li>
-        <li
-          data-page="organization-chart"
-          class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800"
-        >
-          <i data-lucide="layout-grid" class="w-5 h-5"></i>
-          <span class="sidebar-text">Organization Chart</span>
-        </li>
-        <li data-page="productivity" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
-          <i data-lucide="activity" class="w-5 h-5"></i>
-          <span class="sidebar-text">Productivity</span>
-        </li>
-        <li data-page="personal" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
-          <i data-lucide="user" class="w-5 h-5"></i>
-          <span class="sidebar-text">Personal</span>
-        </li>
-        <li data-page="it-services" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
-          <i data-lucide="server" class="w-5 h-5"></i>
-          <span class="sidebar-text">IT Services</span>
-        </li>
-        <li data-page="policies" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
-          <i data-lucide="file-text" class="w-5 h-5"></i>
-          <span class="sidebar-text">Policies</span>
-        </li>
-        <li data-page="dashboard" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
+        <li data-page="dashboard" class="menu-item flex items-center p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
           <i data-lucide="bar-chart" class="w-5 h-5"></i>
-          <span class="sidebar-text">Dashboard</span>
+          <span class="sidebar-text ml-3 transition-opacity duration-300 opacity-100">Dashboard</span>
         </li>
-
-        <!-- Divider -->
-        <hr class="border-gray-400 my-3" />
-
-        <li data-page="magazine" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
-          <i data-lucide="book" class="w-5 h-5"></i>
-          <span class="sidebar-text">Magazine</span>
-        </li>
-        <li data-page="archives" class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
-          <i data-lucide="archive" class="w-5 h-5"></i>
-          <span class="sidebar-text">Archives</span>
-        </li>
-        <li
-          data-page="dfccil-directory"
-          class="menu-item flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800"
-        >
-          <i data-lucide="phone" class="w-5 h-5"></i>
-          <span class="sidebar-text">DFCCIL Directory</span>
+        <li data-page="settings" class="menu-item flex items-center p-3 rounded cursor-pointer hover:bg-white hover:text-indigo-800">
+          <i data-lucide="settings" class="w-5 h-5"></i>
+          <span class="sidebar-text ml-3 transition-opacity duration-300 opacity-100">Settings</span>
         </li>
       </ul>
     </div>
@@ -88,54 +47,16 @@
         const sidebar = document.getElementById('sidebar')
         const texts = document.querySelectorAll('.sidebar-text')
 
-        sidebar.classList.toggle('w-64')
-        sidebar.classList.toggle('w-20')
-
-        texts.forEach((text) => text.classList.toggle('hidden'))
+        if (sidebar.classList.contains('max-w-64')) {
+          sidebar.classList.remove('max-w-64')
+          sidebar.classList.add('max-w-20')
+          texts.forEach((text) => text.classList.add('opacity-0'))
+        } else {
+          sidebar.classList.remove('max-w-24')
+          sidebar.classList.add('max-w-64')
+          texts.forEach((text) => text.classList.remove('opacity-0'))
+        }
       }
-
-      // Page Content Mapping
-      const pageContent = {
-        home: "<h1 class='text-2xl font-bold'>Home</h1><p class='text-gray-700 mt-2'>Welcome to the homepage!</p>",
-        leadership: "<h1 class='text-2xl font-bold'>Our Leadership</h1><p class='text-gray-700 mt-2'>Meet our leadership team.</p>",
-        'organization-chart':
-          "<h1 class='text-2xl font-bold'>Organization Chart</h1><p class='text-gray-700 mt-2'>Here is our organization structure.</p>",
-        productivity: "<h1 class='text-2xl font-bold'>Productivity</h1><p class='text-gray-700 mt-2'>Track productivity insights.</p>",
-        dashboard: "<h1 class='text-2xl font-bold'>Dashboard</h1><p class='text-gray-700 mt-2'>View important metrics.</p>",
-        'dfccil-directory': "<h1 class='text-2xl font-bold'>DFCCIL Directory</h1><p class='text-gray-700 mt-2'>View the directory information.</p>",
-        magazine: "<h1 class='text-2xl font-bold'>Magazine</h1><p class='text-gray-700 mt-2'>Read the latest magazine updates.</p>",
-        archives: "<h1 class='text-2xl font-bold'>Archives</h1><p class='text-gray-700 mt-2'>Explore our archives.</p>"
-      }
-
-      // Active State and Content Change
-      const menuItems = document.querySelectorAll('.menu-item')
-      const contentDiv = document.getElementById('content')
-
-      function setActivePage(page) {
-        localStorage.setItem('activePage', page)
-        menuItems.forEach((item) => {
-          if (item.getAttribute('data-page') === page) {
-            item.classList.add('bg-white', 'text-indigo-800')
-            item.classList.remove('hover:bg-white', 'hover:text-indigo-800')
-          } else {
-            item.classList.remove('bg-white', 'text-indigo-800')
-            item.classList.add('hover:bg-white', 'hover:text-indigo-800')
-          }
-        })
-        contentDiv.innerHTML = pageContent[page] || "<h1 class='text-2xl font-bold'>Page Not Found</h1>"
-      }
-
-      // Apply Active State from LocalStorage
-      document.addEventListener('DOMContentLoaded', () => {
-        const savedPage = localStorage.getItem('activePage') || 'home'
-        setActivePage(savedPage)
-        menuItems.forEach((item) => {
-          item.addEventListener('click', () => {
-            const page = item.getAttribute('data-page')
-            setActivePage(page)
-          })
-        })
-      })
     </script>
   </body>
 </html>
